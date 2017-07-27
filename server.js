@@ -11,7 +11,19 @@ const GRAPHQL_ENDPOINT = '/graphql';
 const app = new Koa();
 const router = new Router();
 
-const schema = {};
+const schema = makeExecutableSchema({
+  typeDefs: `
+    type Query {
+      hello: String
+    }
+  `,
+
+  resolvers: {
+    Query: {
+      hello: (root, args, context) => 'Hello world!',
+    },
+  }
+});
 
 app.use(logger());
 app.use(bodyParser());
